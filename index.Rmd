@@ -1,5 +1,5 @@
 ---
-  title: "Introduction to R & RStudio"
+  title: "Get started with R & RStudio"
   author: Robert Castelo & Mireia Ramos
   output:
     xaringan::moon_reader:
@@ -26,7 +26,7 @@ knitr::knit_hooks$set(small.mar=function(before, options, envir) {
 
 class: title-slide, middle, center
 
-# Programming with data: the R language
+# Get started with R and RStudio
 
 ## Robert Castelo & Mireia Ramos
 [robert.castelo@upf.edu](mailto:robert.castelo@upf.edu)
