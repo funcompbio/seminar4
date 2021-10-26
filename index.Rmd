@@ -1,0 +1,377 @@
+---
+  title: "Introduction to R & RStudio"
+  author: Robert Castelo & Mireia Ramos
+  output:
+    xaringan::moon_reader:
+      nature:
+        beforeInit: js/macros.js
+      self_contained: true
+      css: [default, default-fonts, ninjutsu, css/upf.css]
+      seal: false
+---
+
+```{r setup, include=FALSE, cache=FALSE}
+options(htmltools.dir.version = FALSE, width=130)
+knitr::opts_chunk$set(warning = FALSE,
+                      message = FALSE,
+                      cache=TRUE,
+                      collapse=TRUE,
+                      comment="")
+
+## from http://yihui.name/knitr/hooks#chunk_hooks
+knitr::knit_hooks$set(small.mar=function(before, options, envir) {
+                                              if (before) par(mar=c(4, 5, 1, 1)) ## smaller margin on top and right
+})
+```
+
+class: title-slide, middle, center
+
+# Programming with data: the R language
+
+## Robert Castelo & Mireia Ramos
+[robert.castelo@upf.edu](mailto:robert.castelo@upf.edu)
+### Dept. of Experimental and Health Sciences
+### Universitat Pompeu Fabra
+
+<br>
+
+## Fundamentals of Computational Biology
+### BSc on Human Biology
+### UPF School of Health and Life Sciences
+### Academic Year 2021-2022
+
+---
+
+
+# Setup and background
+
+* To follow these slides you need an installation of 
+  [R](https://www.r-project.org) and [RStudio](https://www.rstudio.com).
+  You should install R .boldface[first] and only once R has been installed,
+  then you should install RStudio.  
+  &nbsp;&nbsp; 
+* You can find installation instructions in the
+  [setup](https://funcompbio.github.io/setup/#r-and-rstudio) link on how to
+  install R .boldface[and] RStudio in your system. Once R and RStudio are installed,
+  you should be able to start RStudio by double-clicking on an icon like the
+  one here below.
+
+![](img/RStudioIcon.png)
+
+---
+
+# Setup and background
+
+We will download some COVID19 data to illustrate the use of R and RStudio.
+Please follow the next two steps:
+
+1. Go to the Catalan Health Departament COVID19 data portal at
+   [https://dadescovid.cat](https://dadescovid.cat) and switch the language to
+   "ENGLISH" using the pull-down menu on the top-right corner of the page.  
+   &nbsp;&nbsp; 
+2. Follow the downloads link and on the next page click and download the file
+   corresponding to the "7 DAY AGGREGATION" for "CATALUNYA".
+   Make sure you know exactly where in your filesystem this file
+   has been downloaded. .boldface[Tip:] some browsers automatically download files
+   into a folder called "Downloads" or under a name corresponding to the
+   translation of "Downloads" to the default language of your operating system.
+
+---
+
+# Setup and background
+
+* Make a directory in your filesystem, for instance at your _home_ directory,
+  called `seminar4` and copy in it the downloaded file.  
+  &nbsp;&nbsp;
+* Since the downloaded file is a ZIP file, uncompress it so that you finally
+  have a file called `catalunya_setmanal.csv` in the directory `seminar4`.  
+  &nbsp;&nbsp;
+* If you are using the UPF [myapps cloud](https://myapps.upf.edu) to run
+  RStudio, then you need to either use an internet browser in _myapps_ to
+  download the data file directly in the _myapps_ cloud or upload to the
+  _myapps_ cloud the file that you have downloaded in your own computer.
+
+---
+
+# Starting R and RStudio
+
+* RStudio is the most popular graphical user interface (GUI), or rather the most
+  popular
+  [integrated development environment (IDE)](https://en.wikipedia.org/wiki/Integrated_development_environment),
+  for working .boldface[with] R. However, RStudio .boldface[is not] R.
+  RStudio .boldface[runs] R. You can also run and work with R .boldface[without] RStudio.  
+  &nbsp;&nbsp;
+* If you need to work with R in a remote server, then either that remote server runs
+  [RStudio server](https://www.rstudio.com/products/rstudio/#rstudio-server) and you
+  can connect to it through a web browser or, alternatively, you only have a text-based
+  connection through a terminal window and then you .boldface[cannot] use RStudio but
+  your can use R on the Unix command-line.  
+  &nbsp;&nbsp;
+* If for whatever reason, you cannot use RStudio, you can still follow these
+  slides, skipping the parts that specifically refer to the GUI of RStudio.
+
+---
+
+# Starting R and RStudio
+
+* The RStudio window is initially divided in three main panes:
+
+.pull-left[
+* .boldface[R shell:] where you can interactively type R commands.  
+  &nbsp;&nbsp;
+* .boldface[Environment / history:] where you can browse through the
+  objects that are being created and the commands that you have
+  typed in the R shell.
+]
+.pull-right[
+![](img/RStudioFreshStart.png)
+]
+
+* .boldface[Files / plots / pkgs / help:] where you can navigate through
+  the filesystem where RStudio is running and change the working
+  directory, visualize plotting output, browse through the loaded
+  packages and read help pages.
+
+---
+
+# Starting R and RStudio
+
+* If you cannot start RStudio but you have installed R, you still can start
+R by typing on the Unix shell command line:
+
+    <pre>
+    $ R
+    </pre>
+
+* Your terminal window should then be running R and looking similar to the one
+  below.
+
+![:scale 70%](img/Rterminal.png)
+
+---
+
+class: small-code
+
+# Quitting R and RStudio
+
+* To quit R and RStudio you should type the following instruction in the
+R shell:
+  <pre>
+  > q()
+  </pre>
+* You should .boldface[not] type the `>` character, since it corresponds to the R
+  prompt and only indicates that the given instruction to the right of that
+  character should be typed in the R shell. Normally, after that instruction
+  R will ask:
+  <pre>
+  > q()
+  Save workspace image? [y/n/c]:
+  </pre>
+* If you answer `y` then R will store all the objects you created in a
+  hidden file called `.RData` and next time you start R, all those objects will
+  be automatically loaded.  
+  &nbsp;&nbsp;
+* In general, there is no reason to save the workspace when you quit R, so you
+  should always answer `n` to that question; answer `c` _cancels_ the
+  quitting instruction.  
+  &nbsp;&nbsp;
+* In RStudio you can also quit R and RStudio by either closing the application
+  window or through the `Quit` option in the _File_ or _RStudio_ top-level menu.
+
+---
+
+# R as a calculator
+
+* The R shell can be directly used as a calculator, type the following
+  instructions and figure out what the operators do:
+<pre>
+> 1+1
+> 5-4
+> 3*2
+> 6/2
+> 4%%3
+> 2**3
+> 2^3
+</pre>
+
+---
+
+# R as a calculator
+
+* Type the following and press enter:
+<pre>
+> 1+
+</pre>
+* You should have obtained the following output:
+<pre>
+&gt; 1+
++
+</pre>
+where the cursor is next to the plus sign (`+`) that has appeared in the
+line below. This plus sign indicates that the expression you have written
+is incomplete.  
+&nbsp;&nbsp;
+* This often happens when there is, for instance, a missing
+closing parenthesis. In this situation you can do two things: (1) you
+complete the instruction or (2) you press the `Esc` key, which will cancel
+the instruction. Try cancelling this incomplete sum with the `Esc` key.
+
+---
+
+# RStudio contextual help
+
+* Try to calculate the natural logarithm of 10 by typing:
+<pre>
+&gt; log(10)
+</pre>
+  If you are using RStudio, note that when you have typed the name of the
+  function `log`, RStudio shows you a popup with contextual help, which
+  you can use to choose among functions that have `log` as a prefix in their
+  name.
+
+![](img/RStudioPopUpContextualHelp.png)
+
+---
+
+# Getting and setting the working directory
+
+* Whenever we want to read or write data files to a specific working directory,
+we need to make sure that the default directory access or R is pointing to that
+directory, just as with current working directory (CWD) in the
+Unix filesystem.  
+&nbsp;&nbsp;
+* To find out the default working directory of R, you should call the `getwd()`
+  function in the R shell:
+  <pre>
+  > getwd()
+  </pre>
+* If the returned path is not the working directory that we want, we can change it
+  with the function `setwd(dir)` where `dir` should be the path that we want to
+  set as working directory.  
+  &nbsp;&nbsp;
+
+---
+
+# Getting and setting the working directory
+
+* In RStudio, using the _Files_ pane, we can navigate through the file system to
+  the directory we want to set as working directory and then click on the `More`
+  pull-down menu and select `Set As Working Directory`.  
+
+![:scale 50%](img/RStudioSetWorkingDirectory.png)
+
+* Using the function `setwd()`, or the RStudio _Files_ pane, change the working
+  directory to the path `seminar4` that you should have created at the beginning
+  of this practical and where you have downloaded the file `catalunya_setmanal.csv`.
+
+---
+
+class: small-code
+
+# Reading CSV files
+
+* We can read CSV files in R using the function `read.csv()`. Let's read the CSV
+  file `catalunya_setmanal.csv` as follows:
+```{r}
+dat <- read.csv("catalunya_setmanal.csv", sep=";", stringsAsFactors=TRUE)
+```
+* Note that when writing the first letters of the filename, you can
+  _autocomplete_ the rest of the filename by pressing the `TAB` key.  
+  &nbsp;&nbsp;
+* Next to the filename as a first argument, we also specified that the column
+  delimiter in `comarques_setmanal.csv` is a semicolon `;` and that we want R
+  to treat character columns as a special kind of object called _factor_.  
+  &nbsp;&nbsp;
+* The `read.csv()` function in R is analogous to the `read_csv()` function
+  in the Python module _pandas_.
+
+---
+
+# Reading CSV files
+
+* The `read.csv()` function returns a `data.frame` object. You can verify it by
+  typing
+```{r}
+class(dat)
+```
+* Figure out the dimensions of this `data.frame` object with the function `dim()`.  
+  &nbsp;&nbsp;
+* Examine the first and last rows of this `data.frame` object with the functions
+  `head()` and `tail()`.  
+  &nbsp;&nbsp;
+* If you are running RStudio, go to the `Environment` pane
+  and click on the small right triangle icon next to the object name and then over
+  the object name.
+
+---
+
+class: small-code
+
+# Reading CSV files
+
+* A quick way to get a summary of the data stored in a `data.frame` object is
+  by calling the function `summary()` with that object as argument. Call `summary()`
+  on the previous `data.frame` object and you should be getting an output similar
+  to this one:
+```{r}
+summary(dat)
+```
+
+---
+
+# Subsetting rows of a data frame
+
+.boldface[Exercise:] Using the previously loaded `data.frame` object, build a
+vector of logical values (a so-called _logical mask_) in one-to-one
+correspondence with the rows, where a position in the vector is `TRUE` if the
+corresponding row contains data belonging to the general population, i.e.,
+excluding geriatric residences; see section on _Subsetting_ from
+[this lecture](https://funcompbio.github.io/lecture6).
+If you store that _logical mask_ into an object called `mask`, the sum of its
+truth values should give the following result:
+```{r, echo=FALSE}
+mask <- dat$RESIDENCIA == "No"
+```
+```{r}
+sum(mask)
+```
+
+Using that logical mask, obtain a new `data.frame` object that includes only
+data rows from the general population. Verify that the number of rows in the
+new object matches the sum of `TRUE` values in the logical mask.
+
+
+---
+
+# Simple plotting
+
+* The main function to plot data points in (base) R is the function `plot()`.
+  Type the following call to the `plot()` function in the R shell:
+```{r, out.height="250px"}
+x <- 1:10
+plot(x, 2*x)
+```
+* Repeat again the last call adding the argument `type="l"`. What did this
+argument change? Is there a value for the parameter `type` that allows one
+to plot both, dots and lines? 
+
+---
+
+# Simple plotting
+
+.boldface[Exercise:] Using the `data.frame` object with COVID19 data from the general population
+obtained in the previous section and the `plot()` function, try to reproduce
+the **shape** of the plots shown at the front page of the Catalan COVID19 data
+portal at [https://dadescovid.cat](https://dadescovid.cat). It is not
+necessary to reproduce details such as colors, axis labels and legends, a
+single solid line showing the shape of the plotted values is enough.
+
+---
+
+class: small-code
+
+# Session information
+
+```{r}
+sessionInfo()
+```
