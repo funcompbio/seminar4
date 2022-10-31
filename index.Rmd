@@ -38,7 +38,7 @@ class: title-slide, middle, center
 ## Fundamentals of Computational Biology
 ### BSc on Human Biology
 ### UPF School of Health and Life Sciences
-### Academic Year 2021-2022
+### Academic Year 2022-2023
 
 ---
 
@@ -262,7 +262,7 @@ Unix filesystem.
 
 * Using the function `setwd()`, or the RStudio _Files_ pane, change the working
   directory to the path `seminar4` that you should have created at the beginning
-  of this practical and where you have downloaded the file `catalunya_setmanal.csv`.
+  of this document and where you have downloaded the file `catalunya_setmanal.csv`.
 
 ---
 
