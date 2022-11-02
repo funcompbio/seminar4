@@ -279,7 +279,7 @@ dat <- read.csv("catalunya_setmanal.csv", sep=";", stringsAsFactors=TRUE)
   _autocomplete_ the rest of the filename by pressing the `TAB` key.  
   &nbsp;&nbsp;
 * Next to the filename as a first argument, we also specified that the column
-  delimiter in `comarques_setmanal.csv` is a semicolon `;` and that we want R
+  delimiter in `catalunya_setmanal.csv` is a semicolon `;` and that we want R
   to treat character columns as a special kind of object called _factor_.  
   &nbsp;&nbsp;
 * The `read.csv()` function in R is analogous to the `read_csv()` function
