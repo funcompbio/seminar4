@@ -1,6 +1,6 @@
 ---
   title: "Get started with R & RStudio"
-  author: Robert Castelo & Mireia Ramos
+  author: Robert Castelo
   output:
     xaringan::moon_reader:
       nature:
@@ -11,11 +11,13 @@
 ---
 
 ```{r setup, include=FALSE, cache=FALSE}
-options(htmltools.dir.version = FALSE, width=130)
+options(htmltools.dir.version = FALSE, width=80)
 knitr::opts_chunk$set(warning = FALSE,
                       message = FALSE,
                       cache=TRUE,
                       collapse=TRUE,
+                      prompt=TRUE,
+                      fig.align="center",
                       comment="")
 
 ## from http://yihui.name/knitr/hooks#chunk_hooks
@@ -28,9 +30,9 @@ class: title-slide, middle, center
 
 # Get started with R and RStudio
 
-## Robert Castelo & Mireia Ramos
+## Robert Castelo
 [robert.castelo@upf.edu](mailto:robert.castelo@upf.edu)
-### Dept. of Experimental and Health Sciences
+### Dept. of Medicine and Life Sciences
 ### Universitat Pompeu Fabra
 
 <br>
@@ -38,7 +40,7 @@ class: title-slide, middle, center
 ## Fundamentals of Computational Biology
 ### BSc on Human Biology
 ### UPF School of Health and Life Sciences
-### Academic Year 2022-2023
+### Academic Year 2023-2024
 
 ---
 
@@ -46,13 +48,13 @@ class: title-slide, middle, center
 # Setup and background
 
 * To follow these slides you need an installation of 
-  [R](https://www.r-project.org) and [RStudio](https://www.rstudio.com).
-  You should install R .boldface[first] and only once R has been installed,
+  [R](https://www.r-project.org) and [RStudio](https://posit.co/downloads).
+  You should install R **first** and only once R has been installed,
   then you should install RStudio.  
   &nbsp;&nbsp; 
 * You can find installation instructions in the
   [setup](https://funcompbio.github.io/setup/#r-and-rstudio) link on how to
-  install R .boldface[and] RStudio in your system. Once R and RStudio are installed,
+  install R **and** RStudio in your system. Once R and RStudio are installed,
   you should be able to start RStudio by double-clicking on an icon like the
   one here below.
 
@@ -62,34 +64,15 @@ class: title-slide, middle, center
 
 # Setup and background
 
-We will download some COVID19 data to illustrate the use of R and RStudio.
-Please follow the next two steps:
-
-1. Go to the Catalan Health Departament COVID19 data portal at
-   [https://dadescovid.cat](https://dadescovid.cat) and switch the language to
-   "ENGLISH" using the pull-down menu on the top-right corner of the page.  
-   &nbsp;&nbsp; 
-2. Follow the downloads link and on the next page click and download the file
-   corresponding to the "7 DAY AGGREGATION" for "CATALUNYA".
-   Make sure you know exactly where in your filesystem this file
-   has been downloaded. .boldface[Tip:] some browsers automatically download files
-   into a folder called "Downloads" or under a name corresponding to the
-   translation of "Downloads" to the default language of your operating system.
-
----
-
-# Setup and background
-
-* Make a directory in your filesystem, for instance at your _home_ directory,
-  called `seminar4` and copy in it the downloaded file.  
+* To illustrate the use of R and RStudio, we will use the data files called
+  `mostres_analitzades.csv` and `virus_detectats.csv` that were generated
+  in the [first practical](https://funcompbio.github.io/practical1) from the
+  infection surveillance system of Catalonia
+  ([SIVIC](https://sivic.salut.gencat.cat) in its Catalan acronym).  
   &nbsp;&nbsp;
-* Since the downloaded file is a ZIP file, uncompress it so that you finally
-  have a file called `catalunya_setmanal.csv` in the directory `seminar4`.  
-  &nbsp;&nbsp;
-* If you are using the UPF [myapps cloud](https://myapps.upf.edu) to run
-  RStudio, then you need to either use an internet browser in _myapps_ to
-  download the data file directly in the _myapps_ cloud or upload to the
-  _myapps_ cloud the file that you have downloaded in your own computer.
+* If you don't have these files, please review that practical and generate them
+  again. Once you have obtained those two files, copy them into a fresh new
+  directory called `seminar4`.
 
 ---
 
@@ -98,14 +81,14 @@ Please follow the next two steps:
 * RStudio is the most popular graphical user interface (GUI), or rather the most
   popular
   [integrated development environment (IDE)](https://en.wikipedia.org/wiki/Integrated_development_environment),
-  for working .boldface[with] R. However, RStudio .boldface[is not] R.
-  RStudio .boldface[runs] R. You can also run and work with R .boldface[without] RStudio.  
+  for working **with** R. However, **RStudio is not R, RStudio runs R**. You can
+  also run and work with R **without** RStudio.  
   &nbsp;&nbsp;
-* If you need to work with R in a remote server, then either that remote server runs
-  [RStudio server](https://www.rstudio.com/products/rstudio/#rstudio-server) and you
-  can connect to it through a web browser or, alternatively, you only have a text-based
-  connection through a terminal window and then you .boldface[cannot] use RStudio but
-  your can use R on the Unix command-line.  
+* If you need to work with R in a remote server, then either that remote server
+  runs [RStudio server](https://posit.co/products/open-source/rstudio-server/)
+  and you can connect to it through a web browser or, alternatively, you only
+  have a text-based connection through a terminal window and then you **cannot**
+  use RStudio but your can use R on the Unix command-line.  
   &nbsp;&nbsp;
 * If for whatever reason, you cannot use RStudio, you can still follow these
   slides, skipping the parts that specifically refer to the GUI of RStudio.
@@ -117,9 +100,9 @@ Please follow the next two steps:
 * The RStudio window is initially divided in three main panes:
 
 .pull-left[
-* .boldface[R shell:] where you can interactively type R commands.  
+* **R shell / prompt:** where you can interactively type R commands.  
   &nbsp;&nbsp;
-* .boldface[Environment / history:] where you can browse through the
+* **Environment / history:** where you can browse through the
   objects that are being created and the commands that you have
   typed in the R shell.
 ]
@@ -127,7 +110,7 @@ Please follow the next two steps:
 ![](img/RStudioFreshStart.png)
 ]
 
-* .boldface[Files / plots / pkgs / help:] where you can navigate through
+* **Files / plots / pkgs / help:** where you can navigate through
   the filesystem where RStudio is running and change the working
   directory, visualize plotting output, browse through the loaded
   packages and read help pages.
@@ -159,7 +142,7 @@ R shell:
   <pre>
   > q()
   </pre>
-* You should .boldface[not] type the `>` character, since it corresponds to the R
+* You **should not** type the `>` character, since it corresponds to the R
   prompt and only indicates that the given instruction to the right of that
   character should be typed in the R shell. Normally, after that instruction
   R will ask:
@@ -171,9 +154,9 @@ R shell:
   hidden file called `.RData` and next time you start R, all those objects will
   be automatically loaded.  
   &nbsp;&nbsp;
-* In general, there is no reason to save the workspace when you quit R, so you
-  should always answer `n` to that question; answer `c` _cancels_ the
-  quitting instruction.  
+* Unless you have a reason to save the workspace when quitting, **you should
+  always answer `n` to that question**; answer `c` _cancels_ the quitting
+  instruction.  
   &nbsp;&nbsp;
 * In RStudio you can also quit R and RStudio by either closing the application
   window or through the `Quit` option in the _File_ or _RStudio_ top-level menu.
@@ -245,45 +228,45 @@ Unix filesystem.
   <pre>
   > getwd()
   </pre>
-* If the returned path is not the working directory that we want, we can change it
-  with the function `setwd(dir)` where `dir` should be the path that we want to
-  set as working directory.  
+* If the returned path is not the working directory that we want, we can change
+  it with the function `setwd(dir)` where `dir` should be the path that we want
+  to set as working directory.  
   &nbsp;&nbsp;
 
 ---
 
 # Getting and setting the working directory
 
-* In RStudio, using the _Files_ pane, we can navigate through the file system to
-  the directory we want to set as working directory and then click on the `More`
-  pull-down menu and select `Set As Working Directory`.  
+* In RStudio, using the _Files_ pane, we can navigate through the file system
+  to the directory we want to set as working directory and then click on the
+  `More` pull-down menu and select `Set As Working Directory`.  
 
 ![:scale 50%](img/RStudioSetWorkingDirectory.png)
 
 * Using the function `setwd()`, or the RStudio _Files_ pane, change the working
-  directory to the path `seminar4` that you should have created at the beginning
-  of this document and where you have downloaded the file `catalunya_setmanal.csv`.
+  directory to the folder `seminar4` that you should have created at the
+  beginning of this document, and where you have downloaded the files
+  `mostres_analitzades.csv` and `virus_detectats.csv`.
 
 ---
-
-class: small-code
 
 # Reading CSV files
 
 * We can read CSV files in R using the function `read.csv()`. Let's read the CSV
-  file `catalunya_setmanal.csv` as follows:
-```{r}
-dat <- read.csv("catalunya_setmanal.csv", sep=";", stringsAsFactors=TRUE)
-```
+  file `virus_detectats.csv` as follows:
+
+  ```{r}
+  dat <- read.csv("virus_detectats.csv", stringsAsFactors=TRUE)
+  ```
 * Note that when writing the first letters of the filename, you can
   _autocomplete_ the rest of the filename by pressing the `TAB` key.  
   &nbsp;&nbsp;
-* Next to the filename as a first argument, we also specified that the column
-  delimiter in `catalunya_setmanal.csv` is a semicolon `;` and that we want R
+* Next to the filename as a first argument, we also specified that we want R
   to treat character columns as a special kind of object called _factor_.  
   &nbsp;&nbsp;
 * The `read.csv()` function in R is analogous to the `read_csv()` function
-  in the Python module _pandas_.
+  in the
+  [Python module _pandas_](https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html).
 
 ---
 
@@ -291,17 +274,18 @@ dat <- read.csv("catalunya_setmanal.csv", sep=";", stringsAsFactors=TRUE)
 
 * The `read.csv()` function returns a `data.frame` object. You can verify it by
   typing
-```{r}
-class(dat)
-```
+
+  ```{r}
+  class(dat)
+  ```
 * Figure out the dimensions of this `data.frame` object with the function `dim()`.  
   &nbsp;&nbsp;
 * Examine the first and last rows of this `data.frame` object with the functions
   `head()` and `tail()`.  
   &nbsp;&nbsp;
 * If you are running RStudio, go to the `Environment` pane
-  and click on the small right triangle icon next to the object name and then over
-  the object name.
+  and click on the small right triangle icon next to the object name and then
+  over the object name.
 
 ---
 
@@ -310,9 +294,10 @@ class: small-code
 # Reading CSV files
 
 * A quick way to get a summary of the data stored in a `data.frame` object is
-  by calling the function `summary()` with that object as argument. Call `summary()`
-  on the previous `data.frame` object and you should be getting an output similar
-  to this one:
+  by calling the function `summary()` with that object as argument. Call
+  `summary()` on the previous `data.frame` object and you should be getting an
+  output similar to this one:
+
 ```{r}
 summary(dat)
 ```
@@ -321,25 +306,82 @@ summary(dat)
 
 # Subsetting rows of a data frame
 
-.boldface[Exercise:] Using the previously loaded `data.frame` object, build a
+**Exercise:** Using the previously loaded `data.frame` object, build a
 vector of logical values (a so-called _logical mask_) in one-to-one
 correspondence with the rows, where a position in the vector is `TRUE` if the
-corresponding row contains data belonging to the general population, i.e.,
-excluding geriatric residences; see section on _Subsetting_ from
-[this lecture](https://funcompbio.github.io/lecture6).
+corresponding row contains data about the virus `SARS-CoV-2`; see section
+see section on _Subsetting_ from
+[this lecture](https://funcompbio.github.io/lecture6/#32).
 If you store that _logical mask_ into an object called `mask`, the sum of its
 truth values should give the following result:
 ```{r, echo=FALSE}
-mask <- dat$RESIDENCIA == "No"
+mask <- dat$virus == "SARS-CoV-2"
 ```
 ```{r}
 sum(mask)
 ```
 
 Using that logical mask, obtain a new `data.frame` object that includes only
-data rows from the general population. Verify that the number of rows in the
+data rows about the SARS-CoV-2 virus. Verify that the number of rows in the
 new object matches the sum of `TRUE` values in the logical mask.
 
+---
+
+# Contingency tables
+
+* A common operation on factor columns of a `data.frame` object is to cross
+tabulate them, producing a so-called
+[contingency table](https://en.wikipedia.org/wiki/Contingency_table). The
+simplest contingency table consists of calculating the frequency distribution
+of a single column factor:
+
+```{r}
+tab <- table(dat$virus)
+tab
+```
+* Note that the object `tab` is a *named vector*. You can extract the
+  names with:
+
+```{r}
+names(tab)
+```
+
+---
+
+# Contingency tables
+
+* Often, we may want to look at relative frequencies, rather than absolute
+  ones, also known as proportions. In the previous example, we can either
+  divide by the sum or use the function `proportions()`:
+
+```{r}
+tab/sum(tab)
+proportions(tab)
+```
+
+---
+
+# Contingency tables
+
+* Interesting insights come often from looking at a multivariate frequency
+  distribution obtained by cross-tabulating two or more factors:
+
+```{r}
+xtab <- table(dat$virus, dat$sexe)
+xtab
+```
+
+---
+
+# Contingency tables
+
+* We can also easily obtain columnwise percentages by using the function
+  `proportions()` with the argument `margin=2` and multiply them by 100:
+
+```{r}
+xtabpct <- proportions(xtab, margin=2)*100
+xtabpct
+```
 
 ---
 
@@ -352,19 +394,35 @@ x <- 1:10
 plot(x, 2*x)
 ```
 * Repeat again the last call adding the argument `type="l"`. What did this
-argument change? Is there a value for the parameter `type` that allows one
-to plot both, dots and lines? 
+argument change? Consult the
+[help page of `plot()`](https://funcompbio.github.io/lecture6/#37) and find
+out whether there a value for the parameter `type` that allows one to plot both,
+dots and lines? 
 
 ---
 
 # Simple plotting
 
-.boldface[Exercise:] Using the `data.frame` object with COVID19 data from the general population
-obtained in the previous section and the `plot()` function, try to reproduce
-the **shape** of the plots shown at the front page of the Catalan COVID19 data
-portal at [https://dadescovid.cat](https://dadescovid.cat). It is not
-necessary to reproduce details such as colors, axis labels and legends, a
-single solid line showing the shape of the plotted values is enough.
+* We can compare the previous percentages of infecting viruses between
+  men and women as follows:
+
+```{r, out.height="250px"}
+plot(xtabpct[, "Home"], xtabpct[, "Dona"], xlab="Home", ylab="Dona")
+abline(0, 1) ## draw a line where x == y
+text(xtabpct[, "Home"], xtabpct[, "Dona"], rownames(xtabpct))
+```
+* Can you spot what viruses show more distinct percentages between
+  men and women?
+
+---
+
+# Simple plotting
+
+**Exercise:** Using the `data.frame` object storing the data from the CSV file
+`virus_dectectats.csv`, build another `data.frame` object excluding rows with
+the value `No disponible` in the column `sexe`. Using this new `data.frame`
+object, cross tabulate the columns `virus` and `sexe` and figure out how
+percentages of men and women change within each different infecting virus.
 
 ---
 
