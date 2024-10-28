@@ -5,6 +5,7 @@
     xaringan::moon_reader:
       nature:
         beforeInit: js/macros.js
+        countIncrementalSlides: false
       self_contained: true
       css: [default, default-fonts, ninjutsu, css/upf.css]
       seal: false
@@ -39,8 +40,8 @@ class: title-slide, middle, center
 
 ## Fundamentals of Computational Biology
 ### BSc on Human Biology
-### UPF School of Health and Life Sciences
-### Academic Year 2023-2024
+### UPF School of Medicine and Life Sciences
+### Academic Year 2024-2025
 
 ---
 
@@ -311,7 +312,7 @@ vector of logical values (a so-called _logical mask_) in one-to-one
 correspondence with the rows, where a position in the vector is `TRUE` if the
 corresponding row contains data about the virus `SARS-CoV-2`; see section
 see section on _Subsetting_ from
-[this lecture](https://funcompbio.github.io/lecture6/#32).
+[this lecture](https://funcompbio.github.io/lecture6/#38).
 If you store that _logical mask_ into an object called `mask`, the sum of its
 truth values should give the following result:
 ```{r, echo=FALSE}
